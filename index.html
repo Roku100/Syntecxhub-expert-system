@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rule-Based Expert System with Forward Chaining Inference Engine">
+    <title>Expert System | Forward Chaining Inference Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>Expert System</h1>
+                    <span>Forward Chaining Inference Engine</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ghost" id="helpBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <span>How it Works</span>
+                </button>
+                <div class="example-dropdown">
+                    <button class="btn btn-secondary" id="exampleDropdownBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="7 10 12 15 17 10" />
+                            <line x1="12" y1="15" x2="12" y2="3" />
+                        </svg>
+                        <span>Load Example</span>
+                        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-menu" id="exampleMenu">
+                        <button class="dropdown-item" data-example="medical">
+                            <span class="dropdown-icon">🏥</span>
+                            <div class="dropdown-text">
+                                <strong>Medical Diagnosis</strong>
+                                <span>Diagnose flu from symptoms</span>
+                            </div>
+                        </button>
+                        <button class="dropdown-item" data-example="tech">
+                            <span class="dropdown-icon">💻</span>
+                            <div class="dropdown-text">
+                                <strong>Tech Support</strong>
+                                <span>Troubleshoot computer issues</span>
+                            </div>
+                        </button>
+                        <button class="dropdown-item" data-example="animal">
+                            <span class="dropdown-icon">🐾</span>
+                            <div class="dropdown-text">
+                                <strong>Animal Classification</strong>
+                                <span>Identify animals by traits</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner" id="welcomeBanner">
+            <div class="welcome-content">
+                <div class="welcome-icon">💡</div>
+                <div class="welcome-text">
+                    <h3>Welcome! Here's how to get started:</h3>
+                    <ol>
+                        <li><strong>Load an example</strong> using the dropdown above, or add your own rules</li>
+                        <li><strong>Add facts</strong> (symptoms/conditions) you want to analyze</li>
+                        <li><strong>Click "Run Forward Chaining"</strong> to see the reasoning process</li>
+                    </ol>
+                </div>
+                <button class="welcome-close" id="closeBannerBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel - Rules & Facts -->
+            <section class="panel panel-left">
+                <!-- Rules Section -->
+                <div class="card rules-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                            </svg>
+                            <h2>Rules (IF-THEN)</h2>
+                        </div>
+                        <span class="badge" id="ruleCount">0</span>
+                    </div>
+
+                    <div class="rule-input-group">
+                        <div class="input-row">
+                            <label>IF</label>
+                            <input type="text" id="ruleConditions"
+                                placeholder="fever, cough, fatigue (comma-separated)">
+                        </div>
+                        <div class="input-row">
+                            <label>THEN</label>
+                            <input type="text" id="ruleConclusion" placeholder="flu">
+                        </div>
+                        <button class="btn btn-primary" id="addRuleBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                            Add Rule
+                        </button>
+                    </div>
+
+                    <div class="rules-list" id="rulesList">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                <line x1="3" y1="9" x2="21" y2="9" />
+                                <line x1="9" y1="21" x2="9" y2="9" />
+                            </svg>
+                            <p>No rules defined yet</p>
+                            <span>Add IF-THEN rules above or load an example</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Facts Section -->
+                <div class="card facts-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="16" x2="12" y2="12" />
+                                <line x1="12" y1="8" x2="12.01" y2="8" />
+                            </svg>
+                            <h2>Known Facts</h2>
+                        </div>
+                        <span class="badge badge-info" id="factCount">0</span>
+                    </div>
+
+                    <div class="fact-input-group">
+                        <input type="text" id="factInput" placeholder="Enter a fact (e.g., fever)">
+                        <button class="btn btn-primary" id="addFactBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Quick Add Buttons -->
+                    <div class="quick-facts" id="quickFacts">
+                        <span class="quick-facts-label">Quick add:</span>
+                        <div class="quick-facts-list" id="quickFactsList">
+                            <!-- Populated by JavaScript based on loaded example -->
+                        </div>
+                    </div>
+
+                    <div class="facts-container" id="factsList">
+                        <div class="empty-state small">
+                            <p>No facts added</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel - Inference Control -->
+            <section class="panel panel-center">
+                <div class="inference-control">
+                    <button class="btn btn-inference" id="runInferenceBtn">
+                        <div class="btn-glow"></div>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3" />
+                        </svg>
+                        <span>Run Forward Chaining</span>
+                    </button>
+                    <button class="btn btn-ghost" id="clearAllBtn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
+                        <span>Clear All</span>
+                    </button>
+                </div>
+
+                <!-- Conclusions -->
+                <div class="card conclusions-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                <polyline points="22 4 12 14.01 9 11.01" />
+                            </svg>
+                            <h2>Inferred Conclusions</h2>
+                        </div>
+                    </div>
+                    <div class="conclusions-container" id="conclusionsList">
+                        <div class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <p>No conclusions yet</p>
+                            <span>Add facts and run inference</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel - Inference Log -->
+            <section class="panel panel-right">
+                <div class="card log-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="16" y1="13" x2="8" y2="13" />
+                                <line x1="16" y1="17" x2="8" y2="17" />
+                                <polyline points="10 9 9 9 8 9" />
+                            </svg>
+                            <h2>Inference Log</h2>
+                        </div>
+                        <button class="btn btn-icon" id="clearLogBtn" title="Clear Log">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6" />
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="log-container" id="inferenceLog">
+                        <div class="log-welcome">
+                            <div class="log-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path
+                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                            </div>
+                            <h3>Reasoning Path</h3>
+                            <p>The inference engine will show each step of its reasoning process here, including which
+                                rules fire and why.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal-overlay" id="helpModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>How Forward Chaining Works</h2>
+                <button class="btn btn-icon" id="closeHelpBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h3>📋 What is a Rule-Based Expert System?</h3>
+                    <p>An expert system uses knowledge (rules) to make inferences about data (facts). It mimics the
+                        decision-making ability of a human expert.</p>
+                </div>
+                <div class="help-section">
+                    <h3>⚡ Forward Chaining</h3>
+                    <p>Forward chaining is a data-driven inference method where the engine starts with known facts and
+                        applies rules to derive new facts until no more rules can fire.</p>
+                    <div class="help-diagram">
+                        <div class="diagram-step">
+                            <span class="step-num">1</span>
+                            <span>Start with initial facts</span>
+                        </div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-step">
+                            <span class="step-num">2</span>
+                            <span>Find matching rules</span>
+                        </div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-step">
+                            <span class="step-num">3</span>
+                            <span>Fire rules, add new facts</span>
+                        </div>
+                        <div class="diagram-arrow">→</div>
+                        <div class="diagram-step">
+                            <span class="step-num">4</span>
+                            <span>Repeat until done</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="help-section">
+                    <h3>🔗 Multi-Step Inference (Chaining)</h3>
+                    <p>Rules can chain together. The conclusion of one rule can trigger another rule. For example:</p>
+                    <pre class="help-code">
+Rule 1: IF fever, cough THEN cold
+Rule 2: IF cold, fatigue THEN flu
+                    </pre>
+                    <p>If we have facts: fever, cough, fatigue → We first infer "cold", then "flu"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="engine.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
