@@ -1,38 +1,38 @@
-/* ===== CSS Variables & Theme (Light Mode) ===== */
+/* ===== CSS Variables & Theme (Light Mode - Professional) ===== */
 :root {
     --bg-primary: #f8fafc;
     --bg-secondary: #ffffff;
     --bg-tertiary: #f1f5f9;
-    --bg-card: rgba(255, 255, 255, 0.9);
-    --bg-elevated: rgba(234, 240, 245, 0.8);
+    --bg-card: rgba(255, 255, 255, 0.95);
+    --bg-elevated: rgba(241, 245, 249, 0.9);
 
-    --text-primary: #1e293b;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
 
-    --accent-primary: #6366f1;
-    --accent-secondary: #119cd3;
-    --accent-glow: rgba(99, 102, 241, 0.2);
+    --accent-primary: #0d9488;
+    --accent-secondary: #0f766e;
+    --accent-glow: rgba(13, 148, 136, 0.15);
 
-    --success: #16a34a;
-    --success-soft: rgba(22, 163, 74, 0.12);
-    --warning: #ea580c;
-    --warning-soft: rgba(234, 88, 12, 0.12);
-    --info: #06556d;
-    --info-soft: rgba(6, 85, 109, 0.12);
+    --success: #059669;
+    --success-soft: rgba(5, 150, 105, 0.12);
+    --warning: #d97706;
+    --warning-soft: rgba(217, 119, 6, 0.12);
+    --info: #0284c7;
+    --info-soft: rgba(2, 132, 199, 0.12);
     --error: #dc2626;
 
-    --border-color: rgba(0, 0, 0, 0.08);
-    --border-hover: rgba(0, 0, 0, 0.15);
+    --border-color: rgba(0, 0, 0, 0.12);
+    --border-hover: rgba(0, 0, 0, 0.2);
 
     --radius-sm: 6px;
     --radius-md: 10px;
     --radius-lg: 14px;
     --radius-xl: 20px;
 
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1), 0 4px 10px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.12), 0 6px 12px rgba(0, 0, 0, 0.08);
 
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
@@ -228,8 +228,8 @@ body::before {
 /* ===== Welcome Banner ===== */
 .welcome-banner {
     margin: 1rem 0;
-    background: linear-gradient(135deg, var(--info-soft), rgba(99, 102, 241, 0.08));
-    border: 1px solid rgba(37, 99, 235, 0.2);
+    background: linear-gradient(135deg, var(--accent-glow), rgba(13, 148, 136, 0.08));
+    border: 1px solid rgba(13, 148, 136, 0.25);
     border-radius: var(--radius-lg);
     overflow: hidden;
 }
